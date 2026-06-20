@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório - CPF SI-PNI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050505;
+      --bg-soft:#0f0f0f;
+      --card:#141414cc;
+      --line:#3a0b0b;
+      --line-strong:#6b1212;
+      --txt:#f5f5f5;
+      --muted:#b39999;
+      --primary:#ff2b2b;
+      --success:#ff1f1f;
+      --shadow:0 20px 50px rgba(2,8,24,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% -20%, #4a0d0d44, transparent 70%),
+        radial-gradient(900px 400px at 95% 0%, #ff2b2b22, transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, #000000 100%);
+      min-height:100vh;
+      padding-top:66px;
+    }
+    .topbar{
+      width:100%;
+      border-bottom:1px solid #4a0d0d;
+      background:linear-gradient(180deg,#0b162c 0%,#0a0202 100%);
+      box-shadow:0 10px 30px rgba(0,0,0,.28);
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:999;
+    }
+    .topbar .inner{
+      max-width:1080px;
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .brand img{
+      width:36px;height:36px;border-radius:999px;object-fit:cover;
+      border:1px solid #6b1212;background:#0f0f0f;
+    }
+    .brand .txt{line-height:1.2}
+    .brand .txt strong{display:block;font-size:13px;letter-spacing:.4px}
+    .brand .txt span{display:block;font-size:11px;color:var(--muted)}
+    .ttl{
+      border:1px solid #6b1212;background:#240808;border-radius:10px;
+      padding:7px 10px;text-align:center;min-width:174px;
+      transition:all .25s ease;box-shadow:0 0 0 rgba(55,196,255,0);
+    }
+    .ttl-wrap{display:flex;align-items:center;justify-content:center;gap:8px}
+    .ttl-ico{
+      width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;
+      font-size:14px;filter:drop-shadow(0 0 6px rgba(138,201,255,.45));
+      animation:ttlIconPulse 1.1s ease-in-out infinite;transform-origin:center;
+    }
+    @keyframes ttlIconPulse{
+      0%{transform:scale(1);opacity:.78}
+      50%{transform:scale(1.18);opacity:1}
+      100%{transform:scale(1);opacity:.78}
+    }
+    .ttl .v{
+      display:block;font-size:16px;font-weight:800;color:#ff9999;letter-spacing:.2px;
+      text-shadow:0 0 10px rgba(82,183,255,.25);transition:all .2s ease;text-align:center;
+    }
+    @keyframes ttlPulse{
+      0%{transform:scale(1);filter:brightness(1)}
+      50%{transform:scale(1.03);filter:brightness(1.25)}
+      100%{transform:scale(1);filter:brightness(1)}
+    }
+    @keyframes ttlUrgent{
+      0%{transform:scale(1);filter:brightness(1)}
+      50%{transform:scale(1.06);filter:brightness(1.5)}
+      100%{transform:scale(1);filter:brightness(1)}
+    }
+    .ttl.live{box-shadow:0 0 18px rgba(56,180,255,.22), inset 0 0 12px rgba(41,122,208,.22)}
+    .ttl.live .v{animation:ttlPulse 1.2s ease-in-out infinite}
+    .ttl.warn{border-color:#6d5a21;box-shadow:0 0 18px rgba(255,186,64,.24), inset 0 0 10px rgba(150,115,39,.2)}
+    .ttl.warn .v{color:#ffd76a;text-shadow:0 0 14px rgba(255,216,109,.45);animation:ttlPulse .9s ease-in-out infinite}
+    .ttl.danger{border-color:#8a2f3b;box-shadow:0 0 20px rgba(255,86,110,.3), inset 0 0 12px rgba(140,36,60,.28)}
+    .ttl.danger .v{color:#ff879b;text-shadow:0 0 16px rgba(255,129,153,.55);animation:ttlUrgent .6s ease-in-out infinite}
+    .ttl.danger .ttl-ico{animation:ttlIconPulse .55s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,140,160,.65))}
+    .wrap{max-width:1080px;margin:28px auto;padding:0 18px 28px}
+    .hero{
+      background:linear-gradient(180deg, #240b0bdd 0%, #140505dd 100%);
+      border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);
+      position:relative;overflow:hidden;
+    }
+    .hero:before{
+      content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle, #ff2b2b33 0%, transparent 70%);pointer-events:none;
+    }
+    .hero h1{margin:0 0 12px;font-size:30px;font-weight:800;letter-spacing:.2px}
+    .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+    .meta .item{border:1px solid #4a0d0d;background:#140505cc;border-radius:12px;padding:10px 12px}
+    .meta .item span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+    .meta .item strong{font-size:14px;font-weight:700;word-break:break-word}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 13px;border-radius:999px;
+      background:#330b0b;border:1px solid #571212;color:#ff9999;font-size:12px;font-weight:600
+    }
+    .badge:before{content:"●";color:var(--success);font-size:10px}
+    .list{margin-top:18px;display:grid;gap:14px}
+    .card{
+      background:linear-gradient(180deg, #140505ee 0%, #140505ee 100%);
+      border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);
+    }
+    .card h3{
+      margin:0 0 14px;font-size:17px;font-weight:800;color:var(--primary);
+      display:flex;align-items:center;gap:9px;
+    }
+    .card h3:before{
+      content:"#";display:inline-flex;align-items:center;justify-content:center;
+      width:22px;height:22px;border-radius:999px;background:#330c0c;border:1px solid #5e1414;
+      font-size:12px;color:#ff9999;
+    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+    .grid.grid--single{grid-template-columns:1fr;max-width:640px;margin:0 auto}
+    .grid > div,.card .grid article.field,.grid article.field{
+      padding:11px 12px;border:1px solid #3d0d0d;border-radius:12px;background:#140505cc;
+    }
+    .grid span,.card .grid .label{
+      display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px
+    }
+    .grid strong,.card .grid .value{
+      display:block;font-size:14px;font-weight:700;line-height:1.35;word-break:break-word;color:var(--txt)
+    }
+    .muted{color:var(--muted);font-size:13px;margin:0}
+    .foot{margin:16px 2px 0;color:var(--muted);font-size:12px;text-align:center;opacity:.95}
+    .foot-copy{display:block;margin-top:8px;font-size:11px;opacity:.92}
+    .vac-stack{display:flex;flex-direction:column;gap:14px}
+    .vac-bloco{border:1px solid #5e1414;border-radius:12px;padding:12px 12px 14px;background:#140505aa;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+    .vac-titulo{margin:0 0 10px;font-size:15px;font-weight:800;color:#ff4d4d;text-transform:uppercase;letter-spacing:.45px}
+    .vac-bloco .grid{margin-top:0}
+    @media (max-width:640px){
+      body{padding-top:62px}
+      .topbar .inner{padding:10px 12px}
+      .ttl{min-width:148px;padding:6px 8px}
+      .ttl .v{font-size:14px}
+      .ttl-ico{font-size:13px}
+      .wrap{margin:20px auto;padding:0 12px 20px}
+      .hero{padding:16px;border-radius:14px}
+      .hero h1{font-size:22px}
+      .card{padding:13px}
+    }
+    
+    .field-copy-wrap{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;min-width:0}
+    .field-copy-wrap .copy-target{flex:1;min-width:0}
+    .btn-copy-field{
+      flex-shrink:0;width:40px;height:40px;border-radius:10px;padding:0;margin:0;
+      border:1px solid #5e1414;background:linear-gradient(180deg,#240808 0%,#140505 100%);
+      color:#ff9999;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);
+    }
+    .btn-copy-field:hover{border-color:#37c4ff;color:#c8ecff}
+    .btn-copy-field:focus-visible{outline:2px solid #37c4ff;outline-offset:2px}
+    .btn-copy-field:active{transform:scale(0.96)}
+    .btn-copy-field svg{width:18px;height:18px;display:block}
+    .btn-copy-field.is-done{border-color:#1c6b4a;color:#7cf0c2}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <img src="/Meubot_bressan/assets/logo-bot.png" alt="Logo do bot">
+        <div class="txt">
+          <strong>Consulta Do V0XX_C0R3</strong>
+        </div>
+      </div>
+      <div class="ttl"><span class="ttl-wrap"><span class="v" id="ttl">TEMPO INFINITO</span></span></div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Relatório de CPF (SI-PNI)</h1>
+      <div class="meta">
+        <div class="item"><span>CPF consultado</span><strong>148.125.306-95</strong></div>
+        <div class="item"><span>Nome</span><strong>BRUNO LUIZ COSTA CATARINO</strong></div>
+      </div>
+      <span class="badge">Tratamento de dados conforme a LGPD — Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</span>
+    </section>
+    
+    <section class="list"><section class="card"><h3>Dados pessoais</h3><div class="grid"><article class="field"><span class="label">CPF</span><strong class="value">148.125.306-95</strong></article><article class="field"><span class="label">Nome</span><strong class="value">BRUNO LUIZ COSTA CATARINO</strong></article><article class="field"><span class="label">Sexo</span><strong class="value">Masculino</strong></article><article class="field"><span class="label">Nascimento</span><strong class="value">11/08/1998 (27 anos)</strong></article><article class="field"><span class="label">Próximo aniversário</span><strong class="value">🎂 Faltam 51 dias — cairá na terça-feira</strong></article></div></section><section class="card"><h3>CNS</h3><div class="grid"><article class="field"><span class="label">CNS definitivo</span><strong class="value">708402205519561</strong></article><article class="field"><span class="label">CNS provisório</span><strong class="value">161274276580001</strong></article></div></section><section class="card"><h3>Filiação</h3><div class="grid"><article class="field"><span class="label">Mãe</span><strong class="value">ELAINE CRISTINA COSTA CATARINO</strong></article><article class="field"><span class="label">Pai</span><strong class="value">JOAO LUIZ CATARINO</strong></article></div></section><section class="card"><h3>Óbito</h3><div class="grid"><article class="field"><span class="label">Status</span><strong class="value">NÃO</strong></article></div></section><section class="card"><h3>Naturalidade</h3><div class="grid"><article class="field"><span class="label">Município</span><strong class="value">JUIZ DE FORA</strong></article><article class="field"><span class="label">UF</span><strong class="value">MG</strong></article></div></section><section class="card"><h3>Endereço</h3><div class="grid"><article class="field"><span class="label">Logradouro</span><strong class="value">ANTONIO DE PAULA MENDES</strong></article><article class="field"><span class="label">Número</span><strong class="value">450</strong></article><article class="field"><span class="label">Bairro</span><strong class="value">BANDEIRANTES</strong></article><article class="field"><span class="label">Município</span><strong class="value">JUIZ DE FORA</strong></article><article class="field"><span class="label">UF</span><strong class="value">MG</strong></article><article class="field"><span class="label">CEP</span><strong class="value">36047080</strong></article></div></section><section class="card"><h3>Contato</h3><div class="grid"><article class="field"><span class="label">Telefone</span><strong class="value">CELULAR: +55 (32) 991431950</strong></article></div></section><section class="card"><h3>Vacinas / Imunizações</h3><div class="vac-stack"><div class="vac-bloco"><h4 class="vac-titulo">Imunização 1</h4><div class="grid"><article class="field"><span class="label">Vacina</span><strong class="value">vacina covid-19 (recombinante)</strong></article><article class="field"><span class="label">Dose</span><strong class="value">Reforço</strong></article><article class="field"><span class="label">Data</span><strong class="value">29/07/2022</strong></article><article class="field"><span class="label">Lote</span><strong class="value">221VCD008Z</strong></article><article class="field"><span class="label">Fabricante</span><strong class="value">Não informado</strong></article><article class="field"><span class="label">Estabelecimento</span><strong class="value">3060209 - DEPARTAMENTO DE EPIDEMIOLOGIA</strong></article><article class="field"><span class="label">Profissional</span><strong class="value">CARLINDA CABRAL DA SILVA SOUZA</strong></article><article class="field"><span class="label">Campanha</span><strong class="value">Covid-19</strong></article></div></div><div class="vac-bloco"><h4 class="vac-titulo">Imunização 2</h4><div class="grid"><article class="field"><span class="label">Vacina</span><strong class="value">vacina covid-19</strong></article><article class="field"><span class="label">Dose</span><strong class="value">2ª Dose</strong></article><article class="field"><span class="label">Data</span><strong class="value">10/11/2021</strong></article><article class="field"><span class="label">Lote</span><strong class="value">FJ4184</strong></article><article class="field"><span class="label">Fabricante</span><strong class="value">Não informado</strong></article><article class="field"><span class="label">Estabelecimento</span><strong class="value">2153424 - UBS VALE DOS BANDEIRANTES PSF</strong></article><article class="field"><span class="label">Profissional</span><strong class="value">IVANIR MARIA TAVELA</strong></article><article class="field"><span class="label">Campanha</span><strong class="value">Covid-19</strong></article></div></div><div class="vac-bloco"><h4 class="vac-titulo">Imunização 3</h4><div class="grid"><article class="field"><span class="label">Vacina</span><strong class="value">vacina covid-19</strong></article><article class="field"><span class="label">Dose</span><strong class="value">1ª Dose</strong></article><article class="field"><span class="label">Data</span><strong class="value">14/09/2021</strong></article><article class="field"><span class="label">Lote</span><strong class="value">FF5107</strong></article><article class="field"><span class="label">Fabricante</span><strong class="value">Não informado</strong></article><article class="field"><span class="label">Estabelecimento</span><strong class="value">2153424 - UBS VALE DOS BANDEIRANTES PSF</strong></article><article class="field"><span class="label">Profissional</span><strong class="value">JANETE CIBALDE ALEXANDRE</strong></article><article class="field"><span class="label">Campanha</span><strong class="value">Covid-19</strong></article></div></div></div></section></section>
+    <p class="foot">Relatório privado • Link Vitalício<span class="foot-copy">Todos os direitos autorais reservados.</span></p>
+  </main>
+  <script>
+    (function(){
+      var el = document.getElementById("ttl");
+      if (!el) return;
+      var box = el.closest(".ttl");
+      var exp = parseInt(el.getAttribute("data-exp"), 10) || 0;
+      function formatLeft(left){
+        if (left < 0) left = 0;
+        var h = Math.floor(left / 3600);
+        var m = Math.floor((left % 3600) / 60);
+        var s = left % 60;
+        return String(h).padStart(2, "0") + ":" +
+               String(m).padStart(2, "0") + ":" +
+               String(s).padStart(2, "0");
+      }
+      function tick(){
+        var now = Math.floor(Date.now() / 1000);
+        var left = exp - now;
+        if (left <= 0) {
+          if (box) {
+            box.classList.remove("live","warn","danger");
+            box.classList.add("danger");
+          }
+          el.textContent = "00:00:00";
+          setTimeout(function(){ window.location.reload(); }, 500);
+          return;
+        }
+        if (box) {
+          box.classList.remove("live","warn","danger");
+          if (left <= 30) box.classList.add("danger");
+          else if (left <= 60) box.classList.add("warn");
+          else box.classList.add("live");
+        }
+        el.textContent = formatLeft(left);
+        setTimeout(tick, 1000);
+      }
+      // tick();
+    })();
+  </script><script>(function(){
+  function clipSvg(){
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+  }
+  function okSvg(){
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+  }
+  function plainText(el){
+    return (el && el.innerText) ? el.innerText.replace(/\s+/g, " ").trim() : "";
+  }
+  function legacyCopy(text, ok, err){
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy") ? ok() : err(); } catch (e) { err(); }
+    document.body.removeChild(ta);
+  }
+  function copyToClipboard(text, ok, err){
+    if (!text) { err(); return; }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(ok).catch(function(){ legacyCopy(text, ok, err); });
+    } else {
+      legacyCopy(text, ok, err);
+    }
+  }
+  function findSpanStrong(cell){
+    var span = null, strong = null, i, ch;
+    for (i = 0; i < cell.children.length; i++) {
+      ch = cell.children[i];
+      if (ch.tagName === "SPAN" && !span) span = ch;
+      if (ch.tagName === "STRONG" && !strong) strong = ch;
+    }
+    if (!span || !strong) {
+      span = cell.querySelector("span.label") || cell.querySelector("span");
+      strong = cell.querySelector("strong.value") || cell.querySelector("strong");
+    }
+    return span && strong ? { span: span, strong: strong } : null;
+  }
+  function enhance(cell){
+    if (cell.querySelector(".btn-copy-field")) return;
+    var pair = findSpanStrong(cell);
+    if (!pair) return;
+    var txt = plainText(pair.strong);
+    if (!txt) return;
+    var wrap = document.createElement("div");
+    wrap.className = "field-copy-wrap";
+    var left = document.createElement("div");
+    left.className = "copy-target";
+    while (cell.firstChild) left.appendChild(cell.firstChild);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-copy-field";
+    btn.setAttribute("aria-label", "Copiar valor");
+    btn.setAttribute("title", "Copiar");
+    btn.innerHTML = clipSvg();
+    btn.addEventListener("click", function(ev){
+      ev.preventDefault();
+      ev.stopPropagation();
+      copyToClipboard(txt, function(){
+        btn.classList.add("is-done");
+        btn.innerHTML = okSvg();
+        setTimeout(function(){
+          btn.classList.remove("is-done");
+          btn.innerHTML = clipSvg();
+        }, 1600);
+      }, function(){
+        btn.style.opacity = "0.45";
+        setTimeout(function(){ btn.style.opacity = ""; }, 700);
+      });
+    });
+    wrap.appendChild(left);
+    wrap.appendChild(btn);
+    cell.appendChild(wrap);
+  }
+  document.querySelectorAll(".grid article.field, .grid > div, .meta .item, .card .grid > div, .vac-bloco article.field, .card article.field").forEach(enhance);
+})();</script>
+<!--email_on--><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0ed113d3ad0f21f',t:'MTc4MTk4MjU2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
